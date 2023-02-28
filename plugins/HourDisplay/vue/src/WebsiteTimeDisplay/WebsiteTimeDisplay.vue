@@ -34,6 +34,10 @@
       margin: 8px;
     }
   }
+
+  table.dataTable td.label, table.subDataTable td.label {
+    width: 60%;
+  }
 </style>
 
 <script lang="ts">
@@ -98,8 +102,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-  table.dataTable td.label, table.subDataTable td.label {
-    width: 60%;
-  }
-</style>
