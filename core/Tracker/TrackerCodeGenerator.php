@@ -8,6 +8,7 @@
 
 namespace Piwik\Tracker;
 
+use Pdp\Rules;
 use Piwik\Common;
 use Piwik\DbHelper;
 use Piwik\Piwik;
@@ -296,7 +297,10 @@ class TrackerCodeGenerator
         }
         $options = '';
         if ($mergeSubdomains && !empty($firstHost)) {
-            $options .= '  _paq.push(["setCookieDomain", "*.' . $firstHost . '"]);' . "\n";
+            $rules  = Rules::createFromPath('core/Tracker/Assets/public_suffix_list.dat');
+            $result = $rules->resolve($firstHost);
+
+            $options .= '  _paq.push(["setCookieDomain", "*.' . $result->getRegistrableDomain() . '"]);' . "\n";
         }
         if ($mergeAliasUrls && !empty($websiteHosts)) {
             $urls = '["*.' . implode('","*.', $websiteHosts) . '"]';
